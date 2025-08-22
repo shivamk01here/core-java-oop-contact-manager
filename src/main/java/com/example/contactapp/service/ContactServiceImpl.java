@@ -1,5 +1,6 @@
 package com.example.contactapp.service;
 
+import com.example.contactapp.exception.ContactNotFoundException;
 import com.example.contactapp.model.Contact;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -20,7 +21,11 @@ public class ContactServiceImpl implements ContactService {
 
     @Override
     public Contact getContact(int id) {
-        return contactDatabase.get(id);
+        Contact contact = contactDatabase.get(id);
+        if (contact == null) {
+            throw new ContactNotFoundException("Contact with id " + id + " not found!");
+        }
+        return contact;
     }
 
     @Override
